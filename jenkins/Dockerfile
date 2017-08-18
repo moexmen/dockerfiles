@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts-alpine
 
 ENV TZ Asia/Singapore
 ENV GLIBC 2.25-r0
-ENV DOCKER_COMPOSE 1.14.0
+ENV DOCKER_COMPOSE 1.15.0
 
 USER root
 
