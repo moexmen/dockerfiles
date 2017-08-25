@@ -1,0 +1,55 @@
+#!/bin/bash
+
+mkdir -p /coverage
+mkdir -p /log
+
+if [ "$#" -eq 0 ]; then
+	PKG="./..."
+else
+	PKG=${@:1}
+fi
+
+function test-coverage {
+    echo "***********"
+    echo "* go test *"
+    echo "***********"
+
+    # Capture the test result
+    set -o pipefail
+    go test -v $PKG | go2xunit > /log/test.xml
+    code=$?
+    set +o pipefail
+
+    echo "mode: count" > /coverage/coverage.out
+
+    # Generate coverage for our source files
+    for x in $(go list $PKG | grep -v /vendor/); do
+    	file=/coverage/$(echo $x | tr / -)
+    	go test -covermode=count -coverprofile=$file "$x"
+    	tail -n +2 $file >> /coverage/coverage.out
+    done
+
+    go tool cover -html=/coverage/coverage.out -o /coverage/index.html
+    gocover-cobertura < /coverage/coverage.out > /coverage/coverage.xml
+
+    exit $code
+}
+
+function lint-vet {
+    go vet $PKG > /log/vet.txt 2>&1
+    golint $PKG > /log/lint.txt 2>&1
+
+    echo "**********"
+    echo "* go vet *"
+    echo "**********"
+    cat /log/vet.txt
+
+    echo "***********"
+    echo "* go lint *"
+    echo "***********"
+    cat /log/lint.txt
+}
+
+lint-vet
+test-coverage
+exit $?
