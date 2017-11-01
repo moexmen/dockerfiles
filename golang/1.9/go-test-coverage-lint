@@ -4,9 +4,9 @@ mkdir -p /coverage
 mkdir -p /log
 
 if [ "$#" -eq 0 ]; then
-	PKG="./..."
+    PKG=./...
 else
-	PKG=${@:1}
+    PKG=${@:1}
 fi
 
 function test-coverage {
@@ -24,9 +24,9 @@ function test-coverage {
 
     # Generate coverage for our source files
     for x in $(go list $PKG | grep -v /vendor/); do
-    	file=/coverage/$(echo $x | tr / -)
-    	go test -covermode=count -coverprofile=$file "$x"
-    	tail -n +2 $file >> /coverage/coverage.out
+        file=/coverage/$(echo $x | tr / -)
+        go test -covermode=count -coverprofile=$file "$x"
+        tail -n +2 $file >> /coverage/coverage.out
     done
 
     go tool cover -html=/coverage/coverage.out -o /coverage/index.html
@@ -35,21 +35,23 @@ function test-coverage {
     exit $code
 }
 
-function lint-vet {
-    go vet $PKG > /log/vet.txt 2>&1
-    golint $PKG > /log/lint.txt 2>&1
-
-    echo "**********"
-    echo "* go vet *"
-    echo "**********"
-    cat /log/vet.txt
-
-    echo "***********"
-    echo "* go lint *"
-    echo "***********"
-    cat /log/lint.txt
+function quality-check {
+    echo "************************"
+    echo "* Running gometalinter *"
+    echo "************************"
+    gometalinter.v1 --checkstyle \
+                    --disable-all \
+                    --enable=errcheck \
+                    --enable=golint \
+                    --enable=gosimple \
+                    --enable=misspell \
+                    --enable=staticcheck \
+                    --enable=unused \
+                    --enable=vet \
+                    --vendor \
+                    $PKG > /log/checkstyle.xml
 }
 
-lint-vet
+quality-check
 test-coverage
 exit $?
