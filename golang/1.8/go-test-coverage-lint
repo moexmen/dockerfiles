@@ -1,6 +1,5 @@
 #!/bin/bash
 
-mkdir -p /coverage
 mkdir -p /log
 
 if [ "$#" -eq 0 ]; then
@@ -20,22 +19,23 @@ function test-coverage {
     code=$?
     set +o pipefail
 
-    echo "mode: count" > /coverage/coverage.out
+    echo "mode: count" > /log/coverage/coverage.out
 
     # Generate coverage for our source files
+    mkdir -p /log/coverage
     for x in $(go list $PKG | grep -v /vendor/); do
-        file=/coverage/$(echo $x | tr / -)
+        file=/log/coverage/$(echo $x | tr / -)
         go test -covermode=count -coverprofile=$file "$x"
-        tail -n +2 $file >> /coverage/coverage.out
+        tail -n +2 $file >> /log/coverage/coverage.out
     done
 
-    go tool cover -html=/coverage/coverage.out -o /coverage/index.html
-    gocover-cobertura < /coverage/coverage.out > /coverage/coverage.xml
+    go tool cover -html=/log/coverage/coverage.out -o /log/coverage/index.html
+    gocover-cobertura < /log/coverage/coverage.out > /log/coverage.xml
 
     exit $code
 }
 
-function quality-check {
+function linters {
     echo "************************"
     echo "* Running gometalinter *"
     echo "************************"
@@ -52,6 +52,6 @@ function quality-check {
                     $PKG > /log/checkstyle.xml
 }
 
-quality-check
+linters
 test-coverage
 exit $?
