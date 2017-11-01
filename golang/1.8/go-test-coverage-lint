@@ -19,10 +19,10 @@ function test-coverage {
     code=$?
     set +o pipefail
 
+    mkdir -p /log/coverage
     echo "mode: count" > /log/coverage/coverage.out
 
     # Generate coverage for our source files
-    mkdir -p /log/coverage
     for x in $(go list $PKG | grep -v /vendor/); do
         file=/log/coverage/$(echo $x | tr / -)
         go test -covermode=count -coverprofile=$file "$x"
