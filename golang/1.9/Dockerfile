@@ -9,6 +9,9 @@ RUN apk --update add build-base git bash \
                 github.com/tebeka/go2xunit \
                 github.com/t-yuki/gocover-cobertura \
                 gopkg.in/alecthomas/gometalinter.v2 \
-    && gometalinter.v2 --install
+                github.com/moexmen/gas-report-filter \
+    && gometalinter.v2 --install \
+    # Needs to be installed last to override outdated version in gometalinter
+    && go get github.com/GoASTScanner/gas/cmd/gas/...
 
-ADD go-test-coverage-lint /usr/local/bin/
+COPY go-test-coverage-lint go-ast-scanner /usr/local/bin/
