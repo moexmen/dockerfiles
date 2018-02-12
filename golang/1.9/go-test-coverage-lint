@@ -39,15 +39,13 @@ function linters {
     echo "************************"
     echo "* Running gometalinter *"
     echo "************************"
-    gometalinter.v1 --checkstyle \
+    gometalinter.v2 --checkstyle \
                     --deadline=60s \
                     --disable-all \
                     --enable=errcheck \
                     --enable=golint \
-                    --enable=gosimple \
+                    --enable=megacheck \
                     --enable=misspell \
-                    --enable=staticcheck \
-                    --enable=unused \
                     --enable=vet \
                     --vendor \
                     $PKG > /log/checkstyle.xml
