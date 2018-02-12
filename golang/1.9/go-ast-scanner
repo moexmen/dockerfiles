@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mkdir -p /log
-gas -exclude=$GLOBAL_WHITELIST -fmt=junit-xml ./... | go run /gas-filter-report.go -whitelist whitelist.json > /log/report.xml
+gas -exclude=$GLOBAL_WHITELIST -fmt=junit-xml ./... | gas-report-filter -whitelist whitelist.json > /log/report.xml
