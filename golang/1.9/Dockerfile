@@ -13,6 +13,5 @@ RUN apk --update add build-base git bash \
     # Needs to be installed last to override outdated version in gometalinter
     && go get github.com/GoASTScanner/gas/cmd/gas/...
 
-COPY go-test-coverage-lint /usr/local/bin/
-COPY go-ast-scanner /usr/local/bin/
+COPY go-test-coverage-lint go-ast-scanner /usr/local/bin/
 COPY gas-filter-report.go /
