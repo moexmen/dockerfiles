@@ -1,0 +1,56 @@
+#!/bin/bash
+
+mkdir -p /log
+
+if [ "$#" -eq 0 ]; then
+    PKG=./...
+else
+    PKG=${@:1}
+fi
+
+function test-coverage {
+    echo "***********"
+    echo "* go test *"
+    echo "***********"
+
+    # Capture the test result
+    set -o pipefail
+    go test -v $PKG | go2xunit > /log/test.xml
+    code=$?
+    set +o pipefail
+
+    mkdir -p /log/coverage
+    echo "mode: count" > /log/coverage/coverage.out
+
+    # Generate coverage for our source files
+    for x in $(go list $PKG | grep -v /vendor/); do
+        file=/log/coverage/$(echo $x | tr / -)
+        go test -covermode=count -coverprofile=$file "$x"
+        tail -n +2 $file >> /log/coverage/coverage.out
+    done
+
+    go tool cover -html=/log/coverage/coverage.out -o /log/coverage/index.html
+    gocover-cobertura < /log/coverage/coverage.out > /log/coverage.xml
+
+    exit $code
+}
+
+function linters {
+    echo "************************"
+    echo "* Running gometalinter *"
+    echo "************************"
+    gometalinter.v2 --checkstyle \
+                    --deadline=60s \
+                    --disable-all \
+                    --enable=errcheck \
+                    --enable=golint \
+                    --enable=megacheck \
+                    --enable=misspell \
+                    --enable=vet \
+                    --vendor \
+                    $PKG > /log/checkstyle.xml
+}
+
+linters
+test-coverage
+exit $?
