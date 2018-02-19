@@ -1,0 +1,30 @@
+sudo: required
+
+language: bash
+
+env:
+- TESTFOLDER=alpine/3.6
+- TESTFOLDER=alpine/3.7
+- TESTFOLDER=golang/1.9
+- TESTFOLDER=golang/1.10
+- TESTFOLDER=jenkins
+- TESTFOLDER=node/8
+- TESTFOLDER=node/8-chromium
+- TESTFOLDER=rsyslog
+- TESTFOLDER=ruby/2.4-alpine
+- TESTFOLDER=ruby/2.4-alpine-phantomjs
+- TESTFOLDER=ruby/2.5-alpine
+- TESTFOLDER=ruby/2.5-alpine-phantomjs
+- TESTFOLDER=socat
+- TESTFOLDER=zap-scan
+
+services:
+- docker
+
+script:
+- cd $TESTFOLDER
+- docker build -t $TESTFOLDER .
+
+branches:
+  only:
+  - master
