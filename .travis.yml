@@ -1,6 +1,5 @@
 sudo: required
-
-language: bash
+services: docker
 
 env:
 - TESTFOLDER=alpine/3.6
@@ -18,13 +17,9 @@ env:
 - TESTFOLDER=socat
 - TESTFOLDER=zap-scan
 
-services:
-- docker
-
 script:
 - cd $TESTFOLDER
 - docker build -t $TESTFOLDER .
 
 branches:
-  only:
-  - master
+  only: master
