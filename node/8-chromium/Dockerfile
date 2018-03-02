@@ -15,4 +15,6 @@ RUN \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && adduser -S -h /app -u 10000 app
 
+ENV CHROME_BIN /usr/bin/chromium-browser
+
 WORKDIR /app
