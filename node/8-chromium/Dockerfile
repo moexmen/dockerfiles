@@ -5,7 +5,7 @@ RUN sed -i -e 's/v3\.6/v3.7/g' /etc/apk/repositories \
     && apk add --no-cache --upgrade apk-tools
 
 ENV TZ Asia/Singapore
-ENV DOCKERIZE_VERSION v0.6.0
+ENV DOCKERIZE_VERSION v0.6.1
 
 RUN \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
