@@ -1,7 +1,7 @@
 FROM node:8-alpine
 
 ENV TZ Asia/Singapore
-ENV DOCKERIZE_VERSION v0.6.0
+ENV DOCKERIZE_VERSION v0.6.1
 
 RUN \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
