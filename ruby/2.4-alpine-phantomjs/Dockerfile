@@ -5,7 +5,7 @@ ENV PHANTOM_JS 2.1.1
 
 RUN \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    && apk --update add postgresql-client \
+    && apk --no-cache add postgresql-client \
                nodejs \
                tzdata \
                libxml2 \
@@ -13,7 +13,7 @@ RUN \
                curl \
                wget \
                ca-certificates \
-    && apk --update add --virtual build-dependencies \
+    && apk --no-cache add --virtual build-dependencies \
                git \
                openssh-client \
                build-base \
