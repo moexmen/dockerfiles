@@ -4,7 +4,7 @@ ENV GOOS linux
 ENV GOARCH amd64
 ENV CGO_ENABLED 0
 
-RUN apk --update add build-base git bash \
+RUN apk --no-cache add build-base git bash \
     && go get -v -u github.com/stretchr/testify \
                 github.com/tebeka/go2xunit \
                 github.com/t-yuki/gocover-cobertura \

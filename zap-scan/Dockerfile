@@ -2,7 +2,7 @@ FROM moexmen/alpine:3.6
 ENV PHANTOM_JS 2.1.1
 
 # Install required packages
-RUN apk add --update \
+RUN apk add --no-cache \
         bash \
         build-base \
         git \
