@@ -13,6 +13,7 @@ env:
 - TESTFOLDER=ruby/2.4-alpine
 - TESTFOLDER=ruby/2.4-alpine-phantomjs
 - TESTFOLDER=ruby/2.5-alpine
+- TESTFOLDER=ruby/2.5-alpine-chromium
 - TESTFOLDER=ruby/2.5-alpine-phantomjs
 - TESTFOLDER=socat
 - TESTFOLDER=zap-scan
