@@ -1,4 +1,4 @@
-FROM moexmen/alpine:3.6
+FROM moexmen/alpine:3.7
 ENV PHANTOM_JS 2.1.1
 
 # Install required packages
