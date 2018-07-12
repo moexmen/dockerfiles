@@ -24,5 +24,5 @@ RUN apk add --no-cache \
 
     # Install htcap & install python dependencies
     && cd /app \
-    && git clone https://github.com/segment-srl/htcap.git \
+    && git clone https://github.com/segment-srl/htcap.git . \
     && pip install requests python-owasp-zap-v2.4
