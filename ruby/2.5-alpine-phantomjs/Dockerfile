@@ -22,7 +22,6 @@ RUN \
                libxslt-dev \
     && bundle config --global jobs 4 \
     && adduser -S -h /app -u 10000 app \
-
     # Install phantomjs
     && cd /tmp \
     && wget -U "awesome browser" https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTOM_JS-linux-x86_64.tar.bz2  \
