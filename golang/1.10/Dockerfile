@@ -12,6 +12,6 @@ RUN apk --no-cache add build-base git bash \
                 github.com/moexmen/gas-report-filter \
     && gometalinter.v2 --install \
     # Needs to be installed last to override outdated version in gometalinter
-    && go get github.com/GoASTScanner/gas/cmd/gas/...
+    && go get github.com/securego/gosec/cmd/gosec/...
 
 COPY go-test-coverage-lint go-ast-scanner /usr/local/bin/
