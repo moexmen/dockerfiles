@@ -1,7 +1,7 @@
 FROM jenkins/jenkins:lts-alpine
 
 ENV TZ Asia/Singapore
-ENV GLIBC 2.27-r0
+ENV GLIBC 2.28-r0
 ENV DOCKER_VERSION 18.03.1
 ENV DOCKER_COMPOSE 1.19.0
 ENV GIT_LFS_VERSION 2.3.4
@@ -15,7 +15,7 @@ RUN \
     && tar -xvf docker-latest.tgz \
     && mv docker/* /usr/bin \
     && rm -rf docker docker-latest.tgz \
-    && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub \
+    && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
     && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC/glibc-$GLIBC.apk \
     && apk add --no-cache glibc-$GLIBC.apk && rm glibc-$GLIBC.apk \
     && ln -s /lib/libz.so.1 /usr/glibc-compat/lib/ \
@@ -25,6 +25,6 @@ RUN \
     && curl -L -o git-lfs.tar.gz https://github.com/git-lfs/git-lfs/releases/download/v${GIT_LFS_VERSION}/git-lfs-linux-amd64-${GIT_LFS_VERSION}.tar.gz \
     && tar -xvzf git-lfs.tar.gz \
     && ./git-lfs-${GIT_LFS_VERSION}/install.sh \
-    && rm -rf git-lfs.tar.gz git-lfs-${GIT_LFS_VERSION} \
+    && rm -rf git-lfs.tar.gz git-lfs-${GIT_LFS_VERSION}
 
 USER jenkins
