@@ -4,7 +4,6 @@ services: docker
 env:
 - TESTFOLDER=alpine/3.6
 - TESTFOLDER=alpine/3.7
-- TESTFOLDER=golang/1.9
 - TESTFOLDER=golang/1.10
 - TESTFOLDER=golang/1.11/alpine3.8
 - TESTFOLDER=jenkins
