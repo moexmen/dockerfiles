@@ -8,7 +8,7 @@ ENV GIT_LFS_VERSION 2.5.1
 USER root
 
 RUN \
-    apk add --no-cache openssl tzdata rsync python3 \
+    apk add --no-cache openssl tzdata rsync python3 make \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && curl -L -o docker-latest.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}-ce.tgz \
     && tar -xf docker-latest.tgz \
