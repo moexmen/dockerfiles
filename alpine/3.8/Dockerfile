@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.8
 
 ENV TZ Asia/Singapore
 ENV DOCKERIZE_VERSION v0.6.1
