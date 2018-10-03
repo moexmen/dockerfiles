@@ -1,4 +1,4 @@
-FROM moexmen/alpine:3.7
+FROM moexmen/alpine:3.8
 ENV PHANTOM_JS 2.1.1
 ENV DOCKERIZE_VERSION v0.6.1
 
