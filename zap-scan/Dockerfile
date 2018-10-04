@@ -1,6 +1,5 @@
 FROM moexmen/alpine:3.8
 ENV PHANTOM_JS 2.1.1
-ENV DOCKERIZE_VERSION v0.6.1
 
 # Install required packages
 RUN apk add --no-cache \
@@ -26,8 +25,4 @@ RUN apk add --no-cache \
     && cd /app \
     && git clone https://github.com/segment-srl/htcap.git . \
     && touch __init__.py \
-    && pip install requests python-owasp-zap-v2.4 \
-    # Install dockerize
-    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+    && pip install requests python-owasp-zap-v2.4
