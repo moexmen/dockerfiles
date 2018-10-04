@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     && wget -U "awesome browser" https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTOM_JS-linux-x86_64.tar.bz2  \
     && tar -xjf phantomjs-$PHANTOM_JS-linux-x86_64.tar.bz2 \
     && cp phantomjs-$PHANTOM_JS-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs \
-    && rm -rf phanomjs-$PHANTOM_JS-linux-x86_64* \
+    && rm -rf phantomjs-$PHANTOM_JS-linux-x86_64* \
     && curl -Ls "https://github.com/dustinblackman/phantomized/releases/download/2.1.1/dockerized-phantomjs.tar.gz" | tar xz -C / \
     # Install htcap & install python dependencies
     && cd /app \
