@@ -4,11 +4,13 @@ if [[ $# -ne 0 ]]; then
     exec "$@"
 else
     if [[ -z "$TARGET_HOST" ]]; then
-        # On the mac, the `docker.for.mac.localhost` resolves
+        # On windows and mac, the `host.docker.internal` resolves
         # to the host ip
-        getent hosts docker.for.mac.localhost > /dev/null
+        # Linux doesn't work properly yet, see below
+        # https://github.com/docker/for-linux/issues/264
+        getent hosts host.docker.internal > /dev/null
         if [[ $? -eq 0 ]]; then
-            TARGET_HOST=docker.for.mac.localhost
+            TARGET_HOST=host.docker.internal
         else
             TARGET_HOST=$(ip route | grep default | awk "{print \$3}")
         fi
