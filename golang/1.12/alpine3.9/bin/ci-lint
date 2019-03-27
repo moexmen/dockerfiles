@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+usage() {
+    echo "usage: ci-lint [--out checkstyle.xml] go-pkg"
+}
+
+while [[ "$1" == -* ]]; do
+    case $1 in
+        -o|--out)
+            shift
+            OUTFILE=$1
+            shift
+            ;;
+        *)
+            usage
+            exit 1
+    esac
+done
+
+if [ -z "$OUTFILE" ]; then
+    OUTFILE=checkstyle.xml
+fi
+
+if [ "$#" -eq 0 ]; then
+    PKG=./...
+else
+    PKG=${@:1}
+fi
+
+set +e
+
+golangci-lint run --issues-exit-code 0 \
+                  --enable golint \
+                  --enable misspell \
+                  --out-format checkstyle $PKG > $OUTFILE
