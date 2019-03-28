@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "$#" -eq 0 ]; then
+    PKG=./...
+else
+    PKG=${@:1}
+fi
+
+echo "*******************************************"
+echo "WARNING: This function in deprecated. Please use ci-test/ci-lint instead"
+echo "*******************************************"
+echo
+
+function test-coverage {
+    ci-test --out /log/test.xml --cover /log/coverage.xml --html /log/coverage.html ./...
+}
+
+function linters {
+    ci-lint --out /log/checkstyle.xml ./...
+}
+
+mkdir -p /log
+linters
+test-coverage
+exit $?

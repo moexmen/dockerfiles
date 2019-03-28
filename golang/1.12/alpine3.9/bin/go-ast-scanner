@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "*******************************************"
+echo "WARNING: This function in deprecated. Please use ci-security-scan instead"
+echo "*******************************************"
+
+mkdir -p /log
+
+if [ ! -z $GLOBAL_WHITELIST ]; then
+    EXCLUDES="--excludes $GLOBAL_WHITELIST"
+fi
+
+ci-security-scan $EXCLUDES --out /log/report.xml ./...

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -e
+
+usage() {
+    echo "usage: ci-security-scan [--out security.xml] [--excludes exclusion] [--whitelist whitelist] go-pkg"
+}
+
+while [[ "$1" == -* ]]; do
+    case $1 in
+        -o|--out)
+            shift
+            OUTFILE=$1
+            shift
+            ;;
+        -e|--excludes|-exclude)
+            shift
+            EXCLUDES=$1
+            shift
+            ;;
+        -w|--whitelist)
+            shift
+            WHITELISTFILE=$1
+            shift
+            ;;
+        *)
+            usage
+            exit 1
+    esac
+done
+
+if [ -z "$OUTFILE" ]; then
+    OUTFILE=security.xml
+fi
+
+if [ -z "$WHITELISTFILE" ]; then
+    WHITELISTFILE=whitelist.json
+fi
+
+if [ "$#" -eq 0 ]; then
+    PKG=./...
+else
+    PKG=${@:1}
+fi
+
+set +e
+
+gosec -exclude=$EXCLUDES -fmt=junit-xml $PKG | gas-report-filter -whitelist $WHITELISTFILE > $OUTFILE

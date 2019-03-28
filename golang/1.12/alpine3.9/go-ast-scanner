@@ -1,4 +1,0 @@
-#!/bin/bash
-
-mkdir -p /log
-gosec -exclude=$GLOBAL_WHITELIST -fmt=junit-xml ./... | gas-report-filter -whitelist whitelist.json > /log/report.xml
